@@ -1,0 +1,14 @@
+{
+  "name": "servidor-pollos-w",
+  "version": "1.0.0",
+  "description": "Servidor en la nube para Pollos W",
+  "main": "servidor.js",
+  "scripts": {
+    "start": "node servidor.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.19.2",
+    "pg": "^8.11.5"
+  }
+}
