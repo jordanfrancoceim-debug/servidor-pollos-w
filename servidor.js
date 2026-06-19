@@ -256,17 +256,21 @@ app.post('/api/pedidos/pagar', async (req, res) => {
     }
 });
 
-// 8. REVISAR ESTADO ACTUAL DE LA CAJA
+// 8. REVISAR ESTADO ACTUAL DE LA CAJA (VERSIÓN BLINDADA CONTRA TABLAS VACÍAS)
 app.get('/api/caja/estado-actual', async (req, res) => {
     try {
         const resultado = await pool.query("SELECT id, apertura::INTEGER as apertura, estado, TO_CHAR(fecha_apertura, 'DD/MM/YYYY HH:24:MI') as fecha_f FROM cajas WHERE estado = 'abierta' ORDER BY id DESC LIMIT 1");
-        if (resultado.rows.length === 0) return res.json({ abierta: false, caja: null });
+        
+        if (!resultado || resultado.rows.length === 0) {
+            return res.json({ abierta: false, caja: null });
+        }
         res.json({ abierta: true, caja: resultado.rows });
     } catch (error) {
         console.error(error);
         res.status(500).json({ error: error.message });
     }
 });
+
 
 // BARRA DE GANANCIAS
 app.get('/api/caja/reporte-diario', async (req, res) => {
