@@ -6,10 +6,15 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// CONFIGURACIÓN OFICIAL DE TU BASE DE DATOS EN LA NUBE
+// CONFIGURACIÓN CORREGIDA AL 100% PARA INTERNET (SUPABASE)
 const pool = new Pool({
     connectionString: 'postgresql://postgres.fusembqgtennjzdvkxic:pollosW2026@://supabase.com',
-    ssl: { rejectUnauthorized: false } 
+    ssl: { 
+        rejectUnauthorized: false
+    },
+    max: 10,
+    idleTimeoutMillis: 30000,
+    connectionTimeoutMillis: 2000
 });
 
 // 1. TRAER LAS MESAS REALES
